@@ -11,6 +11,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 * {
@@ -44,7 +45,7 @@ html {
   to {
     opacity: 1;
     transform: translateX(0);
-  }
+ }
 }
 
 @keyframes pulse {
@@ -59,6 +60,8 @@ html {
 body {
   background: var(--background-color);
   padding-top: 6rem;
+  min-width: 320px;
+  overflow-x: hidden;
 }
 
 section {
@@ -145,6 +148,36 @@ section {
 .icons {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.menu-toggle {
+  display: none;
+  width: 4.2rem;
+  height: 4.2rem;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menu-toggle span {
+  width: 2.4rem;
+  height: 0.2rem;
+  background: #fff;
+  border-radius: 999px;
+  transform-origin: center;
+}
+
+.menu-toggle.is-active span:nth-child(1) {
+  transform: translateY(0.7rem) rotate(45deg);
+}
+
+.menu-toggle.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-toggle.is-active span:nth-child(3) {
+  transform: translateY(-0.7rem) rotate(-45deg);
 }
 
 .btn {
@@ -403,6 +436,22 @@ section {
   flex-direction: column;
 }
 
+.map-wrapper {
+  width: min(100%, 80rem);
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  margin: 2rem auto 0;
+}
+
+.map-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: 0;
+}
+
 .footer {
   border-top: var(--border);
   background: var(--background-color);
@@ -480,7 +529,7 @@ section {
 /* ========== MEDIA QUERIES ========== */
 
 /* Tablets e Telas Médias (768px e acima) */
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   :root {
     font-size: 9px;
   }
@@ -720,5 +769,452 @@ section {
 
   .credit {
     font-size: 1rem;
+  }
+}
+
+/* Responsividade para tablets: reduz espacamentos sem mudar a composicao desktop. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    font-size: 10px;
+  }
+
+  section {
+    padding: 2.5rem 1.8rem;
+  }
+
+  .header {
+    padding: 0;
+  }
+
+  .header section {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 1.2rem;
+    padding: 1.1rem 1.8rem;
+  }
+
+  .logo img {
+    max-width: 9rem;
+    height: auto;
+  }
+
+  .navbar {
+    order: initial;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+    gap: clamp(0.4rem, 1vw, 1rem);
+    min-width: 0;
+  }
+
+  .navbar a {
+    margin: 0;
+    font-size: clamp(1.35rem, 1.6vw, 1.6rem);
+    white-space: nowrap;
+  }
+
+  .icons {
+    order: initial;
+  }
+
+  .icon-btn {
+    padding: 0.4rem;
+  }
+
+  .icon-btn img {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .content h3 {
+    font-size: clamp(4.2rem, 6vw, 5rem);
+  }
+
+  .home-container section {
+    min-height: 100vh;
+  }
+
+  .content {
+    max-width: 60rem;
+  }
+
+  .title {
+    font-size: clamp(3rem, 4vw, 3.6rem);
+  }
+
+  .about .row {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 1.2rem;
+  }
+
+  .about .row .container-image {
+    min-height: 34rem;
+  }
+
+  .about .row .content {
+    padding: 2rem;
+  }
+
+  .about .row .content h3 {
+    font-size: 3rem;
+  }
+
+  .about .row .content p {
+    font-size: 1.6rem;
+  }
+
+  .box-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.6rem;
+  }
+
+  .menu .box-container .box {
+    padding: 3.5rem 2.5rem;
+  }
+
+  .menu .box-container .box img {
+    height: 10rem;
+  }
+
+  .review .box-container .box p {
+    font-size: 1.5rem;
+  }
+
+  .credit {
+    font-size: 1.5rem;
+  }
+
+  .map-wrapper iframe {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
+/* Responsividade mobile: header em duas camadas com menu vertical animado. */
+@media (max-width: 767px) {
+  :root {
+    font-size: 10px;
+  }
+
+  body {
+    padding-top: 7rem;
+  }
+
+  section {
+    width: 100%;
+    padding: 2.4rem 1.6rem;
+  }
+
+  .header {
+    padding: 0;
+  }
+
+  .header section {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0;
+    padding: 1rem 1.6rem;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .logo img {
+    width: clamp(7rem, 24vw, 9.5rem);
+    height: auto;
+  }
+
+  .icons {
+    order: initial;
+    gap: clamp(0.4rem, 1.8vw, 0.8rem);
+  }
+
+  .icon-btn {
+    width: clamp(3.8rem, 11vw, 4.4rem);
+    height: clamp(3.8rem, 11vw, 4.4rem);
+    padding: 0.6rem;
+  }
+
+  .icon-btn img {
+    width: clamp(2.1rem, 6vw, 2.6rem);
+    height: clamp(2.1rem, 6vw, 2.6rem);
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .navbar {
+    order: initial;
+    width: 100%;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 0;
+    margin-top: 0;
+    border-top: 0 solid rgba(255, 255, 255, 0.14);
+    pointer-events: none;
+    transform: translateY(-0.6rem);
+  }
+
+  .navbar.is-open {
+    max-height: 34rem;
+    opacity: 1;
+    margin-top: 1rem;
+    padding: 0.8rem 0 0.4rem;
+    border-top-width: 0.1rem;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .navbar a {
+    width: 100%;
+    margin: 0;
+    padding: 1.2rem 0.4rem;
+    font-size: clamp(1.5rem, 4.3vw, 1.8rem);
+  }
+
+  .navbar a::after {
+    left: 0;
+  }
+
+  .navbar a:hover::after {
+    width: 4rem;
+  }
+
+  /* Hero mobile: conteudo centralizado, contraste melhor e altura proporcional. */
+  .home-container {
+    position: relative;
+    background-position: center;
+  }
+
+  .home-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .home-container section {
+    position: relative;
+    z-index: 1;
+    min-height: 70vh;
+    justify-content: center;
+    text-align: center;
+    padding-top: 2.4rem;
+  }
+
+  .home-container .content {
+    max-width: min(100%, 58rem);
+  }
+
+  .content h3 {
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    line-height: 1.12;
+  }
+
+  .content p {
+    font-size: clamp(1.55rem, 4.5vw, 2rem);
+    line-height: 1.6;
+  }
+
+  .btn {
+    padding: clamp(1rem, 3vw, 1.2rem) clamp(2.4rem, 8vw, 3.4rem);
+    font-size: clamp(1.5rem, 4vw, 1.7rem);
+  }
+
+  .title {
+    font-size: clamp(2.6rem, 8vw, 3.4rem);
+    margin-bottom: 2.4rem;
+  }
+
+  /* Sobre mobile: empilha imagem, titulo, texto e botao com imagem menos dominante. */
+  .about .row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .about .row .container-image {
+    width: 100%;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+  .about .row .container-image img {
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+
+  .about .row .content {
+    padding: 2rem 1.6rem 2.4rem;
+  }
+
+  .about .row .content h3 {
+    font-size: clamp(2.1rem, 6vw, 2.7rem);
+    line-height: 1.25;
+  }
+
+  .about .row .content p {
+    font-size: clamp(1.45rem, 4vw, 1.6rem);
+    line-height: 1.7;
+  }
+
+  /* Cards mobile: uma coluna confortavel, sem overflow horizontal. */
+  .box-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+  }
+
+  .menu .box-container .box {
+    padding: 2.8rem 2rem;
+  }
+
+  .menu .box-container .box img {
+    height: clamp(7rem, 22vw, 10rem);
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .menu .box-container .box h3 {
+    font-size: clamp(1.8rem, 5vw, 2rem);
+  }
+
+  .menu .box-container .box .price {
+    font-size: clamp(2.1rem, 6vw, 2.5rem);
+  }
+
+  /* Avaliacoes mobile: caixas mais compactas e texto mais legivel. */
+  .review .box-container .box {
+    padding: 2.2rem 1.6rem;
+  }
+
+  .review .box-container .box > img:first-child {
+    width: 3.4rem;
+    height: auto;
+  }
+
+  .review .box-container .box p {
+    font-size: clamp(1.35rem, 3.8vw, 1.5rem);
+    line-height: 1.65;
+    padding: 1.4rem 0;
+  }
+
+  .review .box-container .box .user {
+    height: 6rem;
+    width: 6rem;
+    margin: 0.8rem auto;
+  }
+
+  .review .box-container .box .stars {
+    gap: 0.35rem;
+    padding: 0.8rem 0 0;
+  }
+
+  .review .box-container .box .stars img {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  /* Mapa mobile: largura total com proporcao estavel. */
+  .address {
+    padding-inline: 1.6rem;
+  }
+
+  .map-wrapper {
+    width: 100%;
+    min-height: 24rem;
+  }
+
+  .map-wrapper iframe {
+    height: 100%;
+    min-height: 0;
+  }
+
+  /* Footer mobile: centralizado, compacto e legivel. */
+  .footer {
+    padding: 2.4rem 1.6rem;
+  }
+
+  .footer .share {
+    gap: 0.8rem;
+    padding: 1rem 0;
+  }
+
+  .footer .share a {
+    width: 3.8rem;
+    height: 3.8rem;
+  }
+
+  .footer .share a img {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  .credit {
+    font-size: clamp(1.2rem, 3.6vw, 1.5rem);
+    line-height: 1.6;
+  }
+
+  .notification {
+    left: 1.6rem;
+    right: 1.6rem;
+    bottom: 1.6rem;
+    max-width: none;
+    text-align: center;
+  }
+}
+
+/* Responsividade para celulares estreitos: preserva toque confortavel e leitura. */
+@media (max-width: 480px) {
+  :root {
+    font-size: 10px;
+  }
+
+  .header section {
+    padding-inline: 1.2rem;
+  }
+
+  section {
+    padding-inline: 1.2rem;
+  }
+
+  .icons {
+    gap: 0.2rem;
+  }
+
+  .navbar.is-open {
+    max-height: 32rem;
+  }
+
+  .home-container section {
+    min-height: 70vh;
+    padding-top: 2.4rem;
+  }
+
+  .about .row .container-image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .menu .box-container .box {
+    padding: 2.4rem 1.4rem;
+  }
+
+  .review .box-container .box {
+    padding: 2rem 1.3rem;
+  }
+
+  .map-wrapper {
+    min-height: 22rem;
   }
 }

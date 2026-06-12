@@ -72,23 +72,39 @@ document.querySelectorAll('section').forEach(section => {
 // Menu hambúrguer para mobile (funcionalidade básica)
 function setupMobileMenu() {
   const navbar = document.querySelector('.navbar');
-  const header = document.querySelector('.header');
+  const menuToggle = document.querySelector('.menu-toggle');
   
+  if (!navbar || !menuToggle) return;
+
+  const closeMenu = () => {
+    navbar.classList.remove('is-open');
+    menuToggle.classList.remove('is-active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Abrir menu');
+  };
+
+  menuToggle.addEventListener('click', () => {
+    const isOpen = navbar.classList.toggle('is-open');
+    menuToggle.classList.toggle('is-active', isOpen);
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+  });
+
   // Fechar menu ao clicar em um link
   document.querySelectorAll('.navbar a').forEach(link => {
     link.addEventListener('click', () => {
       if (window.innerWidth < 768) {
-        navbar.style.display = 'none';
-        setTimeout(() => {
-          navbar.style.display = '';
-        }, 500);
+        closeMenu();
       }
     });
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      closeMenu();
+    }
   });
 }
 
 // Inicializar ao carregar a página
 document.addEventListener('DOMContentLoaded', setupMobileMenu);
-
-// Re-inicializar ao redimensionar a janela
-window.addEventListener('resize', setupMobileMenu);
